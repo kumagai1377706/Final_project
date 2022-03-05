@@ -10,13 +10,31 @@
 
 <body>
 
-  <div id="currentTurn">
-    <h5 id="turnCount">Start!</h5>
-    <h1 id="currentTurnAnimal"></h1>
-  </div>
-  
+  <div id="currentTurn" class="infoTurn">
+    
+      <div id="turnCount" class="infoTurn">Start!</div>
+      <div id="currentTurnAnimal" class="infoTurn"></div>
+      <div class="infoTurn" style="top: 35px; left: 20px;">Current</div>
+    
+    <div class="infoTurn" style="left: 150px;">
+      <table style="left: 0px;">
+        <tr style="font-size: small; height:20px ;">
+          <td id="animalType0">animal1</td>
+          <td>vs</td>
+          <td id="animalType1">animal2</td>
+        </tr>
+        <tr class="animalCount">
+          <td id="animalCount0">animal1</td>
+          <td></td>
+          <td id="animalCount1">animal2</td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="container">
+      <div id="item">testest</div>
+    </div>
 
 </body>
-
 </html>
 <script type="text/javascript" src="othello.js"></script>

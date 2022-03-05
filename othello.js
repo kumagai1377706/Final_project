@@ -51,7 +51,7 @@ const othelloData = {
     currentTurn: 0,// 現在ターンのカウンタ
     failCount: 0,
     failMsgs: ["そこには置けないです", "そこには置けねぇっす", "だから置けないんですって", "何度目です？", "You can NOT put an animal here.",
-    "Vous ne pouvez pas mettre d'animaux ici"]
+        "Vous ne pouvez pas mettre d'animaux ici"]
 };
 //let numTurn = 0; //番手　先手は白＝1
 
@@ -141,15 +141,25 @@ function makeBoard() {
             //ボタンスタイルを設定
             singleButton.id = `x${x}y${y}`;
             singleButton.style.left = `${y * 60}px`;
-            singleButton.style.backgroundColor = colormap[(x + y) % 2];
-            singleButton.style.borderRadius = radiusMap[(x + y) % 2];
-            singleButton.style.position = "relarive";
+            singleButton.className = `type${(x + y) % 2}`;
+            // singleButton.style.backgroundColor = colormap[(x + y) % 2];
+            // singleButton.style.borderRadius = radiusMap[(x + y) % 2];
             singleButton.type = 'button';
             singleButton.addEventListener(
                 "click",
                 function () {
                     putAnimal(this.id);//ボタン押した時のコールバック関数
                 }, false);
+            singleButton.addEventListener(
+                "mousemove",
+
+                function (){
+                    const item= document.getElementById("item")
+                    item.style.left = event.clientX + "px";
+                    item.style.top = event.clientY +  "px";
+                },false);
+                
+//document.getElementsByTagName('body').addEventListener(, mousemove_function);
 
             tempDiv.append(singleButton)
             objDiV.append(singleButton);
@@ -157,7 +167,7 @@ function makeBoard() {
         }
 
         objDiV.style.position = "absolute";
-        objDiV.style.top = `${x * 50}px`;
+        objDiV.style.top = `${x * 50 + 100}px`;
         objDiV.style.height = "70px";
         objDiV.style.width = "500px";
         objBody.append(objDiV);
@@ -168,7 +178,6 @@ function makeBoard() {
     document.getElementById("currentTurnAnimal").textContent = charAnimal[othelloData.currentTurn + 1];
 
 }
-makeBoard();
 
 //盤面を描画する関数
 function boardUpdate() {
@@ -184,9 +193,16 @@ function boardUpdate() {
         }
     );
 
-    //currentTurn
+    //currentTurn Info
     document.getElementById("currentTurnAnimal").textContent = charAnimal[othelloData.currentTurn % 2 + 1];
     document.getElementById("turnCount").textContent = `Turn-${othelloData.currentTurn + 1}`;
+
+    //UPdate score Info
+    othelloData.count().forEach((element, index) => {
+        document.getElementById("animalType" + index).textContent = charAnimal[index + 1];
+        document.getElementById("animalCount" + index).textContent = element
+    });
+    document.getElementById("item").textContent = charAnimal[othelloData.currentTurn % 2 + 1];
 
 
 }
@@ -210,6 +226,13 @@ function putAnimal(buttonID) {
     console.log(othelloData.data);
     boardUpdate();
 }
+
+//　盤面の初期化
+makeBoard();
+boardUpdate();
+
+//let container = document.querySelector('#container');
+//let item = document.querySelector('#item');
 
 // checkBorad;
 

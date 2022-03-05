@@ -1,26 +1,61 @@
-div#currentTurn {
 
-    color: red;
-    position: absolute;
+
+div{
+    background-color: transparent;
+}
+div.infoTurn{
     top: 5px;
-    left: 420px;
-    height: 170px;
-    width: 70px;
+    height:90px;
+    position: absolute;
+
+}
+
+div#currentTurn {
+    color: red;
+    top: 5px;
+    left: 5px;
+    width: 400px;
+    padding: 0px;
     border: 2px dotted black;
-    border-radius: 50px 20px 50px 20px ;
+    border-radius: 35px ;
     text-align: center;
+    background-color: lightblue;
 }
 
-h1 {
+div#turnCount {
     text-align: center;
+    vertical-align: bottom;
+    left: 20px;
+    width: 65px;
 }
 
-h2 {
+div#currentTurnAnimal {
     text-align: center;
+    left: 70px;
+    width: 65px;
+    font-size: xx-large;
+}
+
+table{
+    color: black;
+    padding: 1px;
+    width: 150px;
+    border: 2px solid;
+    border-collapse: collapse;
+    background-color: white;
+}
+tr{
+    border: 2px solid;
+}
+td.animalCount{
+    
+    height: 50px;
+    vertical-align: text-top;
+    font-size: xx-large
 }
 
 button {
-
+    position: relarive;
     height: 50px;
     width: 50px;
     font-size:20px;
@@ -28,4 +63,32 @@ button {
     border: 0px;
     padding: 0px;
 
+}
+button.type0{
+    background-color: silver;
+    border-radius: 10px 20px 10px 20px;
+}
+button.type1{
+    background-color: orchid;
+    border-radius: 20px 10px 20px 10px;
+}
+/*const colormap = ["silver", "orchid"];
+const radiusMap = ["10px 20px 10px 20px", "20px 10px 20px 10px"]
+// singleButton.style.backgroundColor = colormap[(x + y) % 2];
+// singleButton.style.borderRadius = radiusMap[(x + y) % 2];
+*/
+#item{
+	position: absolute;
+	top: 0;
+	left: 0;
+    /* height: 30pt;
+    width: 30pt; */
+    font-size: 10pt;
+	border-radius: 50%;
+	background: white;
+    z-index:10000 ;
+}
+
+body{
+    overflow: hidden;
 }

@@ -1,0 +1,31 @@
+div#currentTurn {
+
+    color: red;
+    position: absolute;
+    top: 5px;
+    left: 420px;
+    height: 170px;
+    width: 70px;
+    border: 2px dotted black;
+    border-radius: 50px 20px 50px 20px ;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+button {
+
+    height: 50px;
+    width: 50px;
+    font-size:20px;
+    /*border-radius:10px 20px 10px 20px*/;
+    border: 0px;
+    padding: 0px;
+
+}

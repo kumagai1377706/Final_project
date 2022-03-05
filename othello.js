@@ -213,12 +213,13 @@ function putAnimal(buttonID) {
     buttonID
     const index_X = Number(buttonID[1]);
     const index_Y = Number(buttonID[3]);
-    console.log(index_X * 1, index_Y * 1, othelloData.currentTurn % 2 + 1);
+    //console.log(index_X * 1, index_Y * 1, othelloData.currentTurn % 2 + 1);
 
 
+    console.log(othelloData.data[index_X][index_Y]);
     //checkBorad(othelloData.data, 4, 2, 1);
 
-    if (checkBorad(othelloData.data, index_X, index_Y, othelloData.currentTurn % 2 + 1)) {
+    if (othelloData.data[index_X][index_Y] == 0 && checkBorad(othelloData.data, index_X, index_Y, othelloData.currentTurn % 2 + 1)) {
         othelloData.currentTurn++
     } else {
         alert(othelloData.alartMessage());

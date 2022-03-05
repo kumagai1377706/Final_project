@@ -43,9 +43,17 @@ const othelloData = {
             }
         );
         return returnArray;
-    }
+    },
+    alartMessage: function () {
+        this.failCount++;
+        return this.failMsgs[this.failCount % (this.failMsgs.length)];
+    },
+    currentTurn: 0,// 現在ターンのカウンタ
+    failCount: 0,
+    failMsgs: ["そこには置けないです", "そこには置けねぇっす", "だから置けないんですって", "何度目です？", "You can NOT put an animal here.",
+    "Vous ne pouvez pas mettre d'animaux ici"]
 };
-let numTurn = 0; //番手　先手は白＝1
+//let numTurn = 0; //番手　先手は白＝1
 
 /**
  * 
@@ -109,7 +117,6 @@ function checkBorad(data, x, y, color) {
     } else {
         return false;
     }
-
 }
 
 
@@ -158,7 +165,7 @@ function makeBoard() {
     }
 
     //盤面情報の配置
-    document.getElementById("currentTurnAnimal").textContent = charAnimal[numTurn + 1];
+    document.getElementById("currentTurnAnimal").textContent = charAnimal[othelloData.currentTurn + 1];
 
 }
 makeBoard();
@@ -178,8 +185,8 @@ function boardUpdate() {
     );
 
     //currentTurn
-    document.getElementById("currentTurnAnimal").textContent = charAnimal[numTurn % 2 + 1];
-    document.getElementById("turnCount").textContent = `Turn-${numTurn  + 1}`;
+    document.getElementById("currentTurnAnimal").textContent = charAnimal[othelloData.currentTurn % 2 + 1];
+    document.getElementById("turnCount").textContent = `Turn-${othelloData.currentTurn + 1}`;
 
 
 }
@@ -190,15 +197,15 @@ function putAnimal(buttonID) {
     buttonID
     const index_X = Number(buttonID[1]);
     const index_Y = Number(buttonID[3]);
-    console.log(index_X * 1, index_Y * 1, numTurn % 2 + 1);
+    console.log(index_X * 1, index_Y * 1, othelloData.currentTurn % 2 + 1);
 
 
     //checkBorad(othelloData.data, 4, 2, 1);
 
-    if (checkBorad(othelloData.data, index_X, index_Y, numTurn % 2 + 1)) {
-        numTurn++
-    } else{
-        alert('そこには置けねぇっす');
+    if (checkBorad(othelloData.data, index_X, index_Y, othelloData.currentTurn % 2 + 1)) {
+        othelloData.currentTurn++
+    } else {
+        alert(othelloData.alartMessage());
     }
     console.log(othelloData.data);
     boardUpdate();

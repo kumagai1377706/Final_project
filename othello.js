@@ -1,10 +1,11 @@
 'use strict'
 
-const charAnimal = ["　", "🐊", "🦝"];
+
 /*
  * オセロオブジェクト
  */
 const othelloData = {
+    charAnimal: ["　", "🐊", "🦝"],
     // 初期盤面データ
     data: [
         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -16,7 +17,7 @@ const othelloData = {
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]
     ],
-    //石の数を数えて返す関数
+    //石の数を数えて返すメソッド
     count: function () {
         return [
             this.flatten(this.data)
@@ -28,7 +29,7 @@ const othelloData = {
         ];
     },
 
-    //初めてのナイトメア課題を応用したメソッドを作る
+    //初めてのナイトメア課題　を応用したメソッドを作る
     flatten: function (inarray) {
         let returnArray = [];
         let tempArray = [];
@@ -44,6 +45,8 @@ const othelloData = {
         );
         return returnArray;
     },
+
+    //警告メッセージ生成メソッド
     alartMessage: function () {
         this.failCount++;
         return this.failMsgs[this.failCount % (this.failMsgs.length)];
@@ -78,9 +81,6 @@ function checkBorad(data, x, y, color) {
             console.log("serch_start", x_dir, y_dir, stepCount);
             // 端っこになるまで探索
             while (x + stepCount * x_dir >= 0 && x + stepCount * x_dir <= 7 && y + stepCount * y_dir >= 0 && y + stepCount * y_dir <= 7) {
-                if (stepCount > 100) {
-                    break;
-                }
                 if (data[x + stepCount * x_dir][y + stepCount * y_dir] == color) {
                     // 同じ色を見つけたらひっくりかえすマスの配列にプッシュ
                     //console.log("TEMP",tempPos);//.length);
@@ -136,7 +136,7 @@ function makeBoard() {
             const radiusMap = ["10px 20px 10px 20px", "20px 10px 20px 10px"]
 
             //ボタンの文字を作成
-            singleButton.textContent = charAnimal[othelloData.data[x][y]];
+            singleButton.textContent = othelloData.charAnimal[othelloData.data[x][y]];
 
             //ボタンスタイルを設定
             singleButton.id = `x${x}y${y}`;
@@ -153,13 +153,13 @@ function makeBoard() {
             singleButton.addEventListener(
                 "mousemove",
 
-                function (){
-                    const item= document.getElementById("item")
+                function () {
+                    const item = document.getElementById("item")
                     item.style.left = event.clientX + "px";
-                    item.style.top = event.clientY +  "px";
-                },false);
-                
-//document.getElementsByTagName('body').addEventListener(, mousemove_function);
+                    item.style.top = event.clientY + "px";
+                }, false);
+
+            //document.getElementsByTagName('body').addEventListener(, mousemove_function);
 
             tempDiv.append(singleButton)
             objDiV.append(singleButton);
@@ -175,7 +175,7 @@ function makeBoard() {
     }
 
     //盤面情報の配置
-    document.getElementById("currentTurnAnimal").textContent = charAnimal[othelloData.currentTurn + 1];
+    document.getElementById("currentTurnAnimal").textContent = othelloData.charAnimal[othelloData.currentTurn + 1];
 
 }
 
@@ -187,22 +187,22 @@ function boardUpdate() {
             elementX.forEach(
                 (erementY, index_Y) => {
                     document.getElementById(`x${index_X}y${index_Y}`).textContent
-                        = charAnimal[othelloData.data[index_X][index_Y]];
+                        = othelloData.charAnimal[othelloData.data[index_X][index_Y]];
                 }
             );
         }
     );
 
     //currentTurn Info
-    document.getElementById("currentTurnAnimal").textContent = charAnimal[othelloData.currentTurn % 2 + 1];
+    document.getElementById("currentTurnAnimal").textContent = othelloData.charAnimal[othelloData.currentTurn % 2 + 1];
     document.getElementById("turnCount").textContent = `Turn-${othelloData.currentTurn + 1}`;
 
     //UPdate score Info
     othelloData.count().forEach((element, index) => {
-        document.getElementById("animalType" + index).textContent = charAnimal[index + 1];
+        document.getElementById("animalType" + index).textContent = othelloData.charAnimal[index + 1];
         document.getElementById("animalCount" + index).textContent = element
     });
-    document.getElementById("item").textContent = charAnimal[othelloData.currentTurn % 2 + 1];
+    document.getElementById("item").textContent = othelloData.charAnimal[othelloData.currentTurn % 2 + 1];
 
 
 }
@@ -230,27 +230,3 @@ function putAnimal(buttonID) {
 //　盤面の初期化
 makeBoard();
 boardUpdate();
-
-//let container = document.querySelector('#container');
-//let item = document.querySelector('#item');
-
-// checkBorad;
-
-// checkBorad(othelloData.data, 4, 2, 1);
-
-// // console.log(othelloData.count());
-// boardUpdate();
-
-// // //
-// // console.log(othelloData);
-// checkBorad(othelloData.data, 4, 2, 1);
-// console.log(othelloData.data);
-
-
-// checkBorad(othelloData.data, 5, 1, 2);
-// checkBorad(othelloData.data, 1, 4, 1);
-// checkBorad(othelloData.data, 1, 3, 1);
-// checkBorad(othelloData.data, 4
-//     , 5, 2);
-// // // othelloData[2][3]=2
-// console.log(othelloData.data);

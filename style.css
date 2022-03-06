@@ -39,7 +39,7 @@ div#currentTurnAnimal {
 table {
     color: black;
     padding: 1px;
-    width: 150px;
+    width: 200px;
     border: 2px solid;
     border-collapse: collapse;
     background-color: white;
@@ -47,13 +47,15 @@ table {
 
 tr {
     border: 2px solid;
+    font-size: large;
+    margin: 0px;
 }
 
-td.animalCount {
+tr.animalCount {
 
-    height: 50px;
+    height: 40px;
     vertical-align: text-top;
-    font-size: xx-large
+    font-size: x-large;
 }
 
 button {

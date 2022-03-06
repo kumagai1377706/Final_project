@@ -28,6 +28,17 @@ const othelloData = {
                 .length
         ];
     },
+    getWonAnimal: function () {
+        const arrTemp = this.count();
+        if (arrTemp[0] > arrTemp[1]) {
+            return 1;
+        } else if (arrTemp[1] > arrTemp[0]) {
+            return 2;
+        } else {
+            return 0;
+        }
+
+    },
 
     //初めてのナイトメア課題　を応用したメソッドを作る
     flatten: function (inarray) {
@@ -66,7 +77,6 @@ const othelloData = {
  * @param {num} color  1白　0黒
  * @returns  成功したか（整理するかを）
  */
-
 function checkBorad(data, x, y, color) {
     const reversePos = [[x, y]];//反転する石　すべての座標配列
 
@@ -131,16 +141,20 @@ function makeBoard() {
         for (let y = 0; y < 8; y++) {
 
             const singleButton = document.createElement("button");
-            const tempDiv = document.createElement("div");
+            // const tempDiv = document.createElement("div");
             const colormap = ["silver", "orchid"];
             const radiusMap = ["10px 20px 10px 20px", "20px 10px 20px 10px"]
 
             //ボタンの文字を作成
             singleButton.textContent = othelloData.charAnimal[othelloData.data[x][y]];
 
+
+            singleButton.style.position = "absolute";
+            singleButton.style.top = `${x * 50 + 100}px`;
+
             //ボタンスタイルを設定
             singleButton.id = `x${x}y${y}`;
-            singleButton.style.left = `${y * 60}px`;
+            singleButton.style.left = `${y * 50}px`;
             singleButton.className = `type${(x + y) % 2}`;
             // singleButton.style.backgroundColor = colormap[(x + y) % 2];
             // singleButton.style.borderRadius = radiusMap[(x + y) % 2];
@@ -161,16 +175,16 @@ function makeBoard() {
 
             //document.getElementsByTagName('body').addEventListener(, mousemove_function);
 
-            tempDiv.append(singleButton)
-            objDiV.append(singleButton);
+            // tempDiv.append(singleButton)
+            objBody.append(singleButton);
 
         }
 
-        objDiV.style.position = "absolute";
-        objDiV.style.top = `${x * 50 + 100}px`;
-        objDiV.style.height = "70px";
-        objDiV.style.width = "500px";
-        objBody.append(objDiV);
+        // objDiV.style.position = "absolute";
+        // objDiV.style.top = `${x * 50 + 100}px`;
+        // objDiV.style.height = "70px";
+        // objDiV.style.width = "500px";
+        // objBody.append(objDiV);
 
     }
 
@@ -222,12 +236,65 @@ function putAnimal(buttonID) {
     if (othelloData.data[index_X][index_Y] == 0 && checkBorad(othelloData.data, index_X, index_Y, othelloData.currentTurn % 2 + 1)) {
         othelloData.currentTurn++
     } else {
+
+        if (othelloData.failCount ==10){
+            alert("よ〜し、オセロのルール教えちゃうぞ！");
+            window.location.href="https://www.google.com/search?q=%E3%82%AA%E3%82%BB%E3%83%AD%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB";
+        }
         alert(othelloData.alartMessage());
     }
     console.log(othelloData.data);
     boardUpdate();
+
+    //60て目でゲーム終了
+    if (othelloData.currentTurn == 60) {
+        finishGame();
+    }
+
+}
+
+//ゲームが終わった時のアニメーション処理
+function finishGame() {
+    const wonAnimal = othelloData.getWonAnimal();
+    // 勝った動物のマスをゲットする1
+    // 勝った動物が入っているボタンのIDを保存する配列
+    const wonAnimalPos = [];
+    for (let x = 0; x < 8; x++) {
+        for (let y = 0; y < 8; y++) {
+            if (othelloData.data[x][y] !== wonAnimal) {
+                wonAnimalPos.push(`x${x}y${y}`)
+            }
+        }
+    }
+
+    let finishFlag = false;
+    let numTimeCount = 1;
+
+    // 落下させる処理
+    const intervalID = window.setInterval(() => {
+        numTimeCount++;
+        wonAnimalPos.forEach(element => {
+            let strPosY = document.getElementById(element).style.top;//px付きの位置
+            let numPosY = Number(strPosY.slice(0, strPosY.length - 2));
+            console.log(numPosY);
+            numPosY += (numTimeCount**3) / 200;
+            document.getElementById(element).style.top = `${numPosY}px`;
+            if (numPosY > screen.height + 100) {
+                console.log("--STOP--");
+                window.clearInterval(intervalID);
+                
+                if (!finishFlag) { alert("お遊びはここまでだ！仕事に戻れ！") };
+                finishFlag = true;
+            }
+        });
+    }, 100);
+    // console.log(wonAnimalPos);
 }
 
 //　盤面の初期化
 makeBoard();
+
+
+//checkBorad(othelloData.data, 4, 2, 1);
 boardUpdate();
+//finishGame();

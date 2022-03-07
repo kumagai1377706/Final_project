@@ -238,9 +238,9 @@ function putAnimal(buttonID) {
         othelloData.currentTurn++
     } else {
 
-        if (othelloData.failCount ==10){
+        if (othelloData.failCount == 10) {
             alert("よ〜し、オセロのルール教えちゃうぞ！");
-            window.location.href="https://www.google.com/search?q=%E3%82%AA%E3%82%BB%E3%83%AD%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB";
+            window.location.href = "https://www.google.com/search?q=%E3%82%AA%E3%82%BB%E3%83%AD%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB";
         }
         alert(othelloData.alartMessage());
     }
@@ -263,7 +263,7 @@ function finishGame() {
     for (let x = 0; x < 8; x++) {
         for (let y = 0; y < 8; y++) {
             if (othelloData.data[x][y] !== wonAnimal) {
-                wonAnimalPos.push([`x${x}y${y}`,(Math.random()+0.5)*1.2])
+                wonAnimalPos.push([`x${x}y${y}`, (Math.random() + 0.5) * 1.2])
             }
         }
     }
@@ -271,19 +271,18 @@ function finishGame() {
     let finishFlag = false;
     let numTimeCount = 1;
 
-    // 落下させる処理
+    // 負け組を落下させる処理
     const intervalID = window.setInterval(() => {
         numTimeCount++;
         wonAnimalPos.forEach(element => {
             let strPosY = document.getElementById(element[0]).style.top;//px付きの位置
             let numPosY = Number(strPosY.slice(0, strPosY.length - 2));
             console.log(numPosY);
-            numPosY += (numTimeCount**3) / 200 * element[1];
+            numPosY += (numTimeCount ** 3) / 200 * element[1];
             document.getElementById(element[0]).style.top = `${numPosY}px`;
             if (numPosY > screen.height + 1500) {
                 console.log("--STOP--");
                 window.clearInterval(intervalID);
-                
                 if (!finishFlag) { alert("お遊びはここまでだ！仕事に戻れ！") };
                 finishFlag = true;
             }
@@ -292,10 +291,90 @@ function finishGame() {
     // console.log(wonAnimalPos);
 }
 
+
+/*
+const panda = {
+    x: 100, 
+    y: 100,
+    x_vec: 10,
+    y_vec: 20,
+}*/
+
+
+const pandaArray = [];
+
+function initPanda() {
+    const objBody = document.getElementsByTagName("body")[0];
+    for (let i = 0; i < Math.random() * 101 + 200; i++) {
+
+        pandaArray.push({
+            x: Math.random() + 250,
+            y: Math.random() * 10,
+            x_vec: Math.random() * 30 - 15,
+            y_vec: Math.random() * 20 + 8,
+        })
+        const divPanda = document.createElement("div");
+        divPanda.className = 'panda';
+        divPanda.id = `panda${i}`;
+        divPanda.style.top = `${pandaArray[i].y}px`;
+        divPanda.style.left = `${pandaArray[i].x}px`;
+        if (i % 50 === 0) {
+            divPanda.textContent = '🐻';
+        } else {
+            divPanda.textContent = '🐼';
+        }
+
+        divPanda.style.zIndex = `${i}`
+        objBody.append(divPanda);
+
+    }
+
+}
+
+
+
+
+
 //　盤面の初期化
+
+
+const intervalIDPanda = window.setInterval(() => {
+    pandaArray.forEach((panda, index) => {
+        // console.log(pandaArray.filter(element=> element.y_vec == 0).length);
+        // console.log(pandaArray.length);
+
+        if (pandaArray.filter(element => element.y_vec == 0).length == pandaArray.length) {
+            window.clearInterval(intervalIDPanda);
+            console.log("panda-finish");//alert('init_finish');
+        }
+
+        panda.x += panda.x_vec;
+        panda.y += panda.y_vec;
+        if (panda.y > document.documentElement.clientHeight + 100) {
+            panda.y_vec *= -0.8;
+            if (panda.y_vec < 0.2) {
+                panda.y_vec = 0;
+                panda.x_vec = 0;
+            }
+        } else if (panda.y < 0) {
+            panda.y = 0;
+            panda.y_vec *= -0.8;
+        }
+        if (panda.x > document.documentElement.clientWidth) {
+            panda.x_vec *= -0.8;
+        } else if (panda.x < 0) {
+            panda.x = 0;
+            panda.x_vec *= -0.8;
+        }
+        document.getElementById(`panda${index}`).style.top = `${panda.y}px`;
+        document.getElementById(`panda${index}`).style.left = `${panda.x}px`;
+    });
+}, 50);
+
 makeBoard();
 
-
 //checkBorad(othelloData.data, 4, 2, 1);
+
 boardUpdate();
+initPanda();
 //finishGame();

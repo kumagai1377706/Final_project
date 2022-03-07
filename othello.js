@@ -327,7 +327,7 @@ const intervalIDPanda = window.setInterval(() => {
         }        
         panda.x += panda.x_vec;
         panda.y += panda.y_vec;
-        if (panda.y > document.documentElement.clientHeight + 100) {
+        if (panda.y > document.documentElement.clientHeight + 200) {
             panda.y_vec *= -0.8;
             if (panda.y_vec < 0.2) {
                 panda.y_vec = 0;

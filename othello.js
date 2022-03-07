@@ -295,7 +295,7 @@ function initPanda() {
     const objBody = document.getElementsByTagName("body")[0];
     for (let i = 0; i < Math.random() * 101 + 200; i++) {
         pandaArray.push({
-            x: Math.random() + 250,
+            x: Math.random() + 200,
             y: Math.random() * 10,
             x_vec: Math.random() * 30 - 15,
             y_vec: Math.random() * 20 + 8,

@@ -1,6 +1,5 @@
 'use strict'
 
-
 /*
  * オセロオブジェクト
  */
@@ -133,7 +132,6 @@ function checkBorad(data, x, y, color) {
 
 //ドキュメントにボタンを６４個配置する
 function makeBoard() {
-
     // ボタンの生成
     const objBody = document.getElementsByTagName("body")[0];
     for (let x = 0; x < 8; x++) {
@@ -148,7 +146,6 @@ function makeBoard() {
 
             //ボタンの文字を作成
             singleButton.textContent = othelloData.charAnimal[othelloData.data[x][y]];
-
 
             singleButton.style.position = "absolute";
             singleButton.style.top = `${x * 50 + 100}px`;
@@ -194,6 +191,7 @@ function makeBoard() {
 
 }
 
+
 //盤面を描画する関数
 function boardUpdate() {
     //盤面の更新
@@ -218,8 +216,6 @@ function boardUpdate() {
         document.getElementById("animalCount" + index).textContent = element
     });
     document.getElementById("item").textContent = othelloData.charAnimal[othelloData.currentTurn % 2 + 1];
-
-
 }
 
 
@@ -229,7 +225,6 @@ function putAnimal(buttonID) {
     const index_X = Number(buttonID[1]);
     const index_Y = Number(buttonID[3]);
     //console.log(index_X * 1, index_Y * 1, othelloData.currentTurn % 2 + 1);
-
 
     console.log(othelloData.data[index_X][index_Y]);
     //checkBorad(othelloData.data, 4, 2, 1);
@@ -247,7 +242,7 @@ function putAnimal(buttonID) {
     console.log(othelloData.data);
     boardUpdate();
 
-    //60て目でゲーム終了
+    //60手目でゲーム終了
     if (othelloData.currentTurn == 60) {
         finishGame();
     }
@@ -292,21 +287,13 @@ function finishGame() {
 }
 
 
-/*
-const panda = {
-    x: 100, 
-    y: 100,
-    x_vec: 10,
-    y_vec: 20,
-}*/
 
-
+//パンダの雪崩を起こす
 const pandaArray = [];
 
 function initPanda() {
     const objBody = document.getElementsByTagName("body")[0];
     for (let i = 0; i < Math.random() * 101 + 200; i++) {
-
         pandaArray.push({
             x: Math.random() + 250,
             y: Math.random() * 10,
@@ -318,36 +305,26 @@ function initPanda() {
         divPanda.id = `panda${i}`;
         divPanda.style.top = `${pandaArray[i].y}px`;
         divPanda.style.left = `${pandaArray[i].x}px`;
-        if (i % 50 === 0) {
+        if (i % 150 === 0) {
             divPanda.textContent = '🐻';
         } else {
             divPanda.textContent = '🐼';
         }
-
         divPanda.style.zIndex = `${i}`
         objBody.append(divPanda);
-
     }
-
 }
 
-
-
-
-
-//　盤面の初期化
-
-
+//パンダ雪崩の制御
 const intervalIDPanda = window.setInterval(() => {
     pandaArray.forEach((panda, index) => {
         // console.log(pandaArray.filter(element=> element.y_vec == 0).length);
         // console.log(pandaArray.length);
-
+        
         if (pandaArray.filter(element => element.y_vec == 0).length == pandaArray.length) {
             window.clearInterval(intervalIDPanda);
             console.log("panda-finish");//alert('init_finish');
-        }
-
+        }        
         panda.x += panda.x_vec;
         panda.y += panda.y_vec;
         if (panda.y > document.documentElement.clientHeight + 100) {
@@ -371,10 +348,12 @@ const intervalIDPanda = window.setInterval(() => {
     });
 }, 50);
 
+
+
+//　盤面の初期化
 makeBoard();
 
 //checkBorad(othelloData.data, 4, 2, 1);
-
 boardUpdate();
 initPanda();
 //finishGame();

@@ -28,17 +28,6 @@ const othelloData = {
                 .length
         ];
     },
-    getWonAnimal: function () {
-        const arrTemp = this.count();
-        if (arrTemp[0] > arrTemp[1]) {
-            return 1;
-        } else if (arrTemp[1] > arrTemp[0]) {
-            return 2;
-        } else {
-            return 0;
-        }
-
-    },
 
     //初めてのナイトメア課題　を応用したメソッドを作る
     flatten: function (inarray) {
@@ -57,13 +46,25 @@ const othelloData = {
         return returnArray;
     },
 
+    getWonAnimal: function () {
+        const arrTemp = this.count();
+        if (arrTemp[0] > arrTemp[1]) {
+            return 1;
+        } else if (arrTemp[1] > arrTemp[0]) {
+            return 2;
+        } else {
+            return 0;
+        }
+
+    },
+
     //警告メッセージ生成メソッド
     alartMessage: function () {
         this.failCount++;
         return this.failMsgs[this.failCount % (this.failMsgs.length)];
     },
     currentTurn: 0,// 現在ターンのカウンタ
-    failCount: 0,
+    failCount: 0,//間違った回数のカウンタ
     failMsgs: ["そこには置けないです", "そこには置けねぇっす", "だから置けないんですって", "何度目です？", "You can NOT put an animal here.",
         "Vous ne pouvez pas mettre d'animaux ici"]
 };
@@ -262,7 +263,7 @@ function finishGame() {
     for (let x = 0; x < 8; x++) {
         for (let y = 0; y < 8; y++) {
             if (othelloData.data[x][y] !== wonAnimal) {
-                wonAnimalPos.push(`x${x}y${y}`)
+                wonAnimalPos.push([`x${x}y${y}`,(Math.random()+0.5)*1.2])
             }
         }
     }
@@ -274,12 +275,12 @@ function finishGame() {
     const intervalID = window.setInterval(() => {
         numTimeCount++;
         wonAnimalPos.forEach(element => {
-            let strPosY = document.getElementById(element).style.top;//px付きの位置
+            let strPosY = document.getElementById(element[0]).style.top;//px付きの位置
             let numPosY = Number(strPosY.slice(0, strPosY.length - 2));
             console.log(numPosY);
-            numPosY += (numTimeCount**3) / 200;
-            document.getElementById(element).style.top = `${numPosY}px`;
-            if (numPosY > screen.height + 100) {
+            numPosY += (numTimeCount**3) / 200 * element[1];
+            document.getElementById(element[0]).style.top = `${numPosY}px`;
+            if (numPosY > screen.height + 1500) {
                 console.log("--STOP--");
                 window.clearInterval(intervalID);
                 
